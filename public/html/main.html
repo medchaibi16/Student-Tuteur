@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload and AI Prompts</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .output {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            white-space: pre-wrap; /* Preserve formatting for extracted text */
+        }
+        .prompt-options {
+            margin-top: 20px;
+        }
+        .prompt-options label {
+            display: block;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h2>Upload a File</h2>
+
+    <label for="fileInput">Select a file:</label>
+    <input type="file" id="fileInput">
+    <button id="uploadBtn" disabled>Upload</button>
+
+    <h3>Extracted Text:</h3>
+    <pre id="extractedText" class="output"></pre>
+
+    <div class="prompt-options">
+        <h3>Choose Prompt Types:</h3>
+        <label>
+            <input type="checkbox" name="promptType" value="summary"> Summary
+        </label>
+        <label>
+            <input type="checkbox" name="promptType" value="qcm"> Multiple-Choice Quiz (QCM)
+        </label>
+        <label>
+            <input type="checkbox" name="promptType" value="roadmap"> Study Roadmap
+        </label>
+        <button id="generateButton" disabled>Generate</button>
+    </div>
+
+    <h3>AI Output:</h3>
+    <div id="aiOutput" class="output"></div>
+
+    <script src="js/fileHandler.js"></script>
+</body>
+</html>
