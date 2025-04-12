@@ -14,7 +14,7 @@
             padding: 10px;
             border: 1px solid #ccc;
             background-color: #f9f9f9;
-            white-space: pre-wrap; /* Preserve formatting for extracted text */
+            white-space: pre-wrap; 
         }
         .prompt-options {
             margin-top: 20px;
@@ -33,7 +33,8 @@
     <button id="uploadBtn" disabled>Upload</button>
 
     <h3>Extracted Text:</h3>
-    <pre id="extractedText" class="output"></pre>
+    <div id="extractedText" class="output" contenteditable="true"></div>
+
 
     <div class="prompt-options">
         <h3>Choose Prompt Types:</h3>
@@ -51,7 +52,14 @@
 
     <h3>AI Output:</h3>
     <div id="aiOutput" class="output"></div>
-
+    <button id="save-button">Save</button>
     <script src="js/fileHandler.js"></script>
+    <p id="login-status">Checking login status...</p>
+    <button id="login-button" style="display: none;">Go to Login Page</button>
+    <button id="logout-button" style="display: none;">Logout</button>
+    <button id="showSavedBtn">Show Saved Prompts</button>
+    <div id="savedPromptsOutput" class="output"></div>
+    <script type="module" src="/js/main.js"></script>        
+      
 </body>
 </html>

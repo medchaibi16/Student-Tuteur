@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const uploadBtn = document.getElementById("uploadBtn");
     const generateButton = document.getElementById("generateButton");
     const extractedText = document.getElementById("extractedText");
-    const aiOutput = document.getElementById("aiOutput");
 
     uploadBtn.disabled = true;
 
@@ -34,7 +33,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const data = await response.json();
             extractedText.textContent = data.text || "No text extracted";
 
-            // Enable the Generate button after successful upload
             generateButton.disabled = false;
 
         } catch (error) {
@@ -43,7 +41,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Generate AI response when button is clicked
     document.getElementById('generateButton').addEventListener('click', async () => {
         const extractedText = document.getElementById('extractedText').textContent;
         const selectedPrompts = Array.from(document.querySelectorAll('input[name="promptType"]:checked'))
@@ -69,16 +66,14 @@ document.addEventListener("DOMContentLoaded", () => {
           }
       
           const data = await response.json();
-          console.log('API Response:', data); // Log the response
+          console.log('API Response:', data);
       
           aiOutput.innerHTML = ''; 
       
-          // Display the results
           data.forEach((item) => {
             const promptType = item.type; 
             const resultDiv = document.createElement('div');
 
-            // Display the type as a heading
             resultDiv.innerHTML = `<strong>${promptType.toUpperCase()}:</strong><br>`;
 
             resultDiv.innerHTML += item.content + '<br><br>';

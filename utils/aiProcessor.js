@@ -2,7 +2,7 @@ import axios from "axios";
 import { encode, decode } from "gpt-3-encoder";
 import dotenv from "dotenv";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import PQueue from 'p-queue';
+
 
 dotenv.config();
 
@@ -19,7 +19,6 @@ async function divideTextIntoChunks(text, maxTokens = 512) {
   return chunks;
 }
 
-// Hugging Face Model URL for Summarization
 const SUMMARY_MODEL_URL = "https://api-inference.huggingface.co/models/facebook/bart-large-cnn";
 
 async function fetchHuggingFaceSummary(prompt) {
@@ -65,27 +64,22 @@ async function detectLanguage(text) {
   try {
     const result = await model.generateContent(prompt);
     const response = await result.response;
-    return response.text().trim(); // Return only the language name
+    return response.text().trim(); 
   } catch (error) {
     console.error(`❌ Error detecting language:`, error);
-    return "English"; // Default fallback
+    return "English"; 
   }
 }
 
-
-
-// Step 1: Extract Key Facts using Hugging Face
 async function extractKeyFacts(text) {
   const prompt = `Résumé des points clés du texte:\n\n${text}`;
   return await fetchHuggingFaceSummary(prompt);
 }
 
-
- //Step 2: Generate AI-Based MCQs using Gemini
  
 async function generateMCQAI(text) {
   const keyFacts = await extractKeyFacts(text);
-  const language = await detectLanguage(text); // Use the new function
+  const language = await detectLanguage(text); 
 
   const prompt = `
     Generate 3 multiple-choice questions (MCQs) based on the following key points:
@@ -134,9 +128,6 @@ async function generateStudyRoadmap(topic, text) {
 }
 
 
-/**
- * ✨ Generate AI responses
- */
 async function generateAIResponse(text, type) {
   if (!text) throw new Error("Input text is required");
 
@@ -151,7 +142,6 @@ async function generateAIResponse(text, type) {
 
   throw new Error("Invalid response type");
 }
-const queue = new PQueue({ interval: 60000, intervalCap: 2 }); // Limit to 2 requests per minute
 const cache = new Map();
 
 async function retryGenerateAIResponse(text, type, retries = 3) {
@@ -163,7 +153,7 @@ async function retryGenerateAIResponse(text, type, retries = 3) {
   for (let attempt = 0; attempt < retries; attempt++) {
       try {
           const result = await generateAIResponse(text, type);
-          cache.set(cacheKey, result); // Store result in cache
+          cache.set(cacheKey, result);
           return result;
       } catch (error) {
           if (error.status === 429 && attempt < retries - 1) {
@@ -179,5 +169,4 @@ async function retryGenerateAIResponse(text, type, retries = 3) {
 }
 
 
-// ✅ Export functions
 export { generateAIResponse, divideTextIntoChunks , retryGenerateAIResponse };
