@@ -40,7 +40,7 @@ const firebaseConfig = {
   const firebaseApp = initializeApp(firebaseConfig);
   const auth = getAuth(firebaseApp);
 
-  const uri = "mongodb+srv://user:user@cluster0.vfxsetx.mongodb.net/?appName=Cluster0";
+  const uri = "your_cluster_here";
   const client = new MongoClient(uri, {
     serverApi: {
       version: ServerApiVersion.v1,
