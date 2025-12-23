@@ -61,4 +61,4 @@ User
 
 Mohamed Chaibi
 Computer Science Student
-Interested in AI systems, backend engineering, and system-level optimizatio
+Interested in AI systems, backend engineering, and system-level optimization
