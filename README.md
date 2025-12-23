@@ -81,7 +81,7 @@ Key learnings include:
 
 ---
 
-## 🚀 Future Improvements
+## Future Improvements
 
 - Improve frontend UI/UX
 - Add support for more document formats
@@ -90,7 +90,7 @@ Key learnings include:
 
 ---
 
-## 👤 Author
+## Author
 
 **Mohamed Chaibi**  
 Computer Science Student  
