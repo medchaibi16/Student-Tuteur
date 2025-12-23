@@ -30,13 +30,13 @@ Student Tutor addresses this problem by using AI models to **extract meaning**, 
 ## Screenshots
 
 ### Authentication & Entry
-![Login Screen](assets/login.png)
+![Login Screen](assets/login.PNG)
 
 ### AI Document Processing
-![AI Processing](assets/extraction.png)
+![AI Processing](assets/extraction.PNG)
 
 ### AI OUTPUT
-![History](assets/ai output.png)
+![History](assets/ai_output.PNG)
 
 ---
 ## System Architecture
