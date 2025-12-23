@@ -28,7 +28,7 @@ app.use(fileUpload()); // Handles file uploads
 app.use(express.static(join(__dirname, 'public'))); // Serves static files
 
 const firebaseConfig = {
-    apiKey: "AIzaSyB83xddXBrCSbZfR1BG2J571mGFme7QYvQ",
+    apiKey: "your_key_here",
     authDomain: "pfaa-138f0.firebaseapp.com",
     projectId: "pfaa-138f0",
     storageBucket: "pfaa-138f0.firebasestorage.app",
@@ -82,9 +82,10 @@ app.post("/upload", async (req, res) => {
     }
 });
 
+// Update your existing /generate endpoint
 app.post('/generate', async (req, res) => {
   try {
-    const { text, types } = req.body;
+    const { text, types, generationCount = 0 } = req.body; // Add generationCount
 
     if (!text || !types || !Array.isArray(types) || types.length === 0) {
       return res.status(400).json({ error: 'Missing text or types' });
@@ -104,12 +105,12 @@ app.post('/generate', async (req, res) => {
       if (type === "summary") {
         const chunks = await divideTextIntoChunks(text);
         for (const chunk of chunks) {
-          const response = await retryGenerateAIResponse(chunk, type);
+          const response = await retryGenerateAIResponse(chunk, type, 3, generationCount > 0);
           typeResponses.push(response);
         }
       } else {
         // Send full input as a single chunk for non-summary types
-        const response = await retryGenerateAIResponse(text, type);
+        const response = await retryGenerateAIResponse(text, type, 3, generationCount > 0);
         typeResponses.push(response);
       }
 
@@ -117,6 +118,7 @@ app.post('/generate', async (req, res) => {
       responses.push({ type, content: finalText });
       processedTypes.set(type, finalText);
     }
+    
 
     res.json(responses);
   } catch (error) {
@@ -210,8 +212,9 @@ app.post('/register', async (req, res) => {
   
 
 // Serve main page
+
 app.get('/', (req, res) => {
-    res.sendFile(join(__dirname, 'public', 'html', 'main.html'));
+  res.sendFile(join(__dirname, 'public', 'html', 'main.html'));
 });
 app.get('/register', (req, res) => {
     res.sendFile(join(__dirname, 'public', 'html', 'register.html'));

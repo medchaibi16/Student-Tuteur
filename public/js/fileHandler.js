@@ -6,6 +6,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     uploadBtn.disabled = true;
 
+    // Track generation count for this session
+    let generationCount = 0;
+
     fileInput.addEventListener("change", () => {
         uploadBtn.disabled = !fileInput.files.length;
     });
@@ -34,6 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
             extractedText.textContent = data.text || "No text extracted";
 
             generateButton.disabled = false;
+            generationCount = 0; // Reset counter when new file is uploaded
 
         } catch (error) {
             console.error("❌ Error:", error);
@@ -52,13 +56,27 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       
         const aiOutput = document.getElementById('aiOutput');
-        aiOutput.innerHTML = 'Generating...'; 
+        
+        // Update button text and show loading message
+        generationCount++;
+        if (generationCount === 1) {
+            aiOutput.innerHTML = 'Generating...';
+            generateButton.textContent = 'Generating...';
+        } else {
+            aiOutput.innerHTML = `🔄 Generating new questions (Set #${generationCount})...`;
+            generateButton.textContent = 'Generating New Questions...';
+        }
       
         try {
+          // Always use the same endpoint, but pass generation count
           const response = await fetch('/generate', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ text: extractedText, types: selectedPrompts }),
+            body: JSON.stringify({ 
+                text: extractedText, 
+                types: selectedPrompts,
+                generationCount: generationCount // Tell backend this is a regeneration
+            }),
           });
       
           if (!response.ok) {
@@ -74,17 +92,28 @@ document.addEventListener("DOMContentLoaded", () => {
             const promptType = item.type; 
             const resultDiv = document.createElement('div');
 
-            resultDiv.innerHTML = `<strong>${promptType.toUpperCase()}:</strong><br>`;
+            // Show generation number for QCM
+            if (promptType === 'qcm' && generationCount > 1) {
+                resultDiv.innerHTML = `<strong>🔄 ${promptType.toUpperCase()} (Set #${generationCount}):</strong><br>`;
+            } else {
+                resultDiv.innerHTML = `<strong>${promptType.toUpperCase()}:</strong><br>`;
+            }
 
             resultDiv.innerHTML += item.content + '<br><br>';
-
             aiOutput.appendChild(resultDiv);
           });
 
+          // Reset button text after generation
+          if (generationCount === 1) {
+              generateButton.textContent = '🔄 Generate New Questions';
+          } else {
+              generateButton.textContent = '🔄 Generate Another Set';
+          }
       
         } catch (error) {
           console.error('❌ Error:', error);
           aiOutput.innerHTML = `Error: ${error.message}`;
+          generateButton.textContent = 'Try Again';
         }
       });
 });

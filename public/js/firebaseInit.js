@@ -2,7 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebas
 import { getAuth } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyB83xddXBrCSbZfR1BG2J571mGFme7QYvQ",
+    apiKey: "your_key_here",
     authDomain: "pfaa-138f0.firebaseapp.com",
     projectId: "pfaa-138f0",
     storageBucket: "pfaa-138f0.firebasestorage.app",

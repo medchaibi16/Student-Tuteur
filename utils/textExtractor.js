@@ -5,7 +5,7 @@ export async function extractText(file) {
     if (!file) throw new Error("No file provided");
 
     const formData = new FormData();
-    formData.append("apikey", "K89336439888957");  
+    formData.append("apikey", "your_key_here");  
     formData.append("file", file.data, file.name); 
     formData.append("language", "eng");
     formData.append("isOverlayRequired", false);

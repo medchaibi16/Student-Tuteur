@@ -4,62 +4,84 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>File Upload and AI Prompts</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        .output {
-            margin-top: 20px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            background-color: #f9f9f9;
-            white-space: pre-wrap; 
-        }
-        .prompt-options {
-            margin-top: 20px;
-        }
-        .prompt-options label {
-            display: block;
-            margin: 5px 0;
-        }
-    </style>
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <h2>Upload a File</h2>
 
-    <label for="fileInput">Select a file:</label>
-    <input type="file" id="fileInput">
-    <button id="uploadBtn" disabled>Upload</button>
+    <div class="container">
+        
+        <header class="dashboard-header">
+            <div>
+                <h1>AI Study Companion</h1>
+                <p id="login-status" style="color: var(--text-muted); font-size: 0.9rem; margin-top: 5px;">
+                    Checking login status...
+                </p>
+            </div>
+            
+            <div class="auth-controls">
+                <button id="login-button" class="btn" style="display: none;">Login</button>
+                <button id="logout-button" class="btn secondary" style="display: none;">Logout</button>
+            </div>
+        </header>
 
-    <h3>Extracted Text:</h3>
-    <div id="extractedText" class="output" contenteditable="true"></div>
+        <main>
+            <div class="card mb-4" style="margin-bottom: 2rem;">
+                <h2>1. Upload a File</h2>
+                <div class="form-group">
+                    <label for="fileInput">Select a file to analyze:</label>
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <input type="file" id="fileInput" style="flex: 1;">
+                        <button id="uploadBtn" class="btn" disabled>Upload File</button>
+                    </div>
+                </div>
+            </div>
 
+            <h3>Extracted Text</h3>
+            <div id="extractedText" class="ai-output-area" contenteditable="true" style="min-height: 100px; color: var(--text-muted);">
+                Text will appear here after upload...
+            </div>
 
-    <div class="prompt-options">
-        <h3>Choose Prompt Types:</h3>
-        <label>
-            <input type="checkbox" name="promptType" value="summary"> Summary
-        </label>
-        <label>
-            <input type="checkbox" name="promptType" value="qcm"> Multiple-Choice Quiz (QCM)
-        </label>
-        <label>
-            <input type="checkbox" name="promptType" value="roadmap"> Study Roadmap
-        </label>
-        <button id="generateButton" disabled>Generate</button>
+            <div class="card" style="margin: 2rem 0;">
+                <h2>2. Choose Options</h2>
+                <div class="prompt-options">
+                    <label style="margin-bottom: 1rem; display:block;">Select Prompt Types:</label>
+                    
+                    <div style="display: flex; gap: 2rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; color: var(--text-main);">
+                            <input type="checkbox" name="promptType" value="summary" style="width: auto;"> 
+                            Summary
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; color: var(--text-main);">
+                            <input type="checkbox" name="promptType" value="qcm" style="width: auto;"> 
+                            Multiple-Choice Quiz
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; color: var(--text-main);">
+                            <input type="checkbox" name="promptType" value="roadmap" style="width: auto;"> 
+                            Study Roadmap
+                        </label>
+                    </div>
+
+                    <button id="generateButton" class="btn" style="width: 100%;" disabled>Generate AI Response</button>
+                </div>
+            </div>
+
+            <h3>AI Output</h3>
+            <div id="aiOutput" class="ai-output-area">
+                AI generation results will appear here...
+            </div>
+
+            <div class="controls">
+                <button id="save-button" class="btn">Save Output to Cloud</button>
+                <button id="showSavedBtn" class="btn secondary">Show Saved Prompts</button>
+            </div>
+
+            <div id="savedPromptsOutput"></div>
+
+        </main>
     </div>
 
-    <h3>AI Output:</h3>
-    <div id="aiOutput" class="output"></div>
-    <button id="save-button">Save</button>
     <script src="js/fileHandler.js"></script>
-    <p id="login-status">Checking login status...</p>
-    <button id="login-button" style="display: none;">Go to Login Page</button>
-    <button id="logout-button" style="display: none;">Logout</button>
-    <button id="showSavedBtn">Show Saved Prompts</button>
-    <div id="savedPromptsOutput" class="output"></div>
-    <script type="module" src="/js/main.js"></script>        
-      
+    <script type="module" src="/js/main.js"></script> 
+
 </body>
 </html>
